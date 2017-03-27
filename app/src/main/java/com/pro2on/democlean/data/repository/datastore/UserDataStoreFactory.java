@@ -31,7 +31,7 @@ public class UserDataStoreFactory {
     public UserDataStore create(String login) {
         UserDataStore userDataStore;
 
-        if (!this.userCache.isExpired() && this.userCache.isCached(login)) {
+        if (!userCache.isExpired() && userCache.isCached(login)) {
             userDataStore = new DiskUserDataStore(this.userCache);
         } else {
             userDataStore = createCloudDataStore(login);

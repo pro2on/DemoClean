@@ -12,4 +12,5 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
     <string name="menu_item_exit">Logout</string>
     <string name="error_login">Get error while login</string>
+    <string name="empty_list">No items</string>
 </resources>

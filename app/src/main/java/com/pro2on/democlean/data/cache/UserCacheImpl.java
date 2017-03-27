@@ -3,7 +3,6 @@ package com.pro2on.democlean.data.cache;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
-
 import com.pro2on.democlean.data.cache.serializer.Serializer;
 import com.pro2on.democlean.data.entity.UserEntity;
 import com.pro2on.democlean.domain.exception.UserNotFoundException;
@@ -50,7 +49,7 @@ public class UserCacheImpl implements UserCache {
                 if (!TextUtils.isEmpty(serializedUser)) {
 
                     final UserEntity userEntity = serializer.deserialize(serializedUser, UserEntity.class);
-                    if (userEntity != null && !TextUtils.isEmpty(userEntity.getLogin()) && userEntity.getLogin().equals(login)) {
+                    if (userEntity != null && !TextUtils.isEmpty(userEntity.getLogin()) && userEntity.getLogin().toLowerCase().equals(login.toLowerCase())) {
 
                         emmiter.onNext(userEntity);
                         emmiter.onComplete();
@@ -88,28 +87,32 @@ public class UserCacheImpl implements UserCache {
     @Override
     public boolean isCached(String login) {
 
+
+        boolean isCached = false;
+
         final String serializedUser = sharedPreferences.getString(KEY_SERIALIZED_USER, null);
+
+
         if (!TextUtils.isEmpty(serializedUser)) {
 
             final UserEntity userEntity = serializer.deserialize(serializedUser, UserEntity.class);
-            if (userEntity != null && !TextUtils.isEmpty(userEntity.getLogin()) && userEntity.getLogin().equals(login)) {
 
-                return true;
+
+            if (userEntity != null && !TextUtils.isEmpty(userEntity.getLogin()) && userEntity.getLogin().toLowerCase().equals(login.toLowerCase())) {
+
+                isCached = true;
 
             } else {
 
                 this.clear();
 
-                return false;
-
             }
 
 
-        } else {
-            return false;
         }
 
 
+        return isCached;
 
 
     }

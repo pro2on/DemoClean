@@ -5,12 +5,15 @@ import com.pro2on.democlean.data.entity.mapper.UserEntityDataMapper;
 import com.pro2on.democlean.data.repository.datastore.UserDataStore;
 import com.pro2on.democlean.data.repository.datastore.UserDataStoreFactory;
 import com.pro2on.democlean.domain.entity.User;
+import com.pro2on.democlean.domain.exception.UserNotFoundException;
 import com.pro2on.democlean.domain.repository.UserRepository;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Function;
 
@@ -44,7 +47,6 @@ public class UserDataRepository implements UserRepository {
                 return userEntityDataMapper.transform(userEntity);
             }
         });
-
 
     }
 }

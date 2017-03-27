@@ -70,4 +70,17 @@ public class UserEntity {
     public void setProjects(List<String> projects) {
         this.projects = projects;
     }
+
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("UserEntity{");
+        sb.append("id=").append(id);
+        sb.append(", login='").append(login).append('\'');
+        sb.append(", url='").append(url).append('\'');
+        sb.append(", email='").append(email).append('\'');
+        sb.append(", projects=").append(projects);
+        sb.append('}');
+        return sb.toString();
+    }
 }

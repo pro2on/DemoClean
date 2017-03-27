@@ -1,7 +1,9 @@
 package com.pro2on.democlean.domain.interactor;
 
+import com.pro2on.democlean.domain.entity.User;
 import com.pro2on.democlean.domain.model.SessionManager;
 import com.pro2on.democlean.domain.repository.LoginRepository;
+import com.pro2on.democlean.domain.repository.UserRepository;
 
 import java.util.concurrent.TimeUnit;
 
@@ -10,6 +12,10 @@ import javax.inject.Inject;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.ObservableSource;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 
 public class LoginInteractor {
@@ -17,32 +23,38 @@ public class LoginInteractor {
 
     private final SessionManager sessionManager;
     private final LoginRepository loginRepository;
-
+    private final UserRepository userRepository;
 
     @Inject
-    public LoginInteractor(SessionManager sessionManager, LoginRepository loginRepository) {
+    public LoginInteractor(SessionManager sessionManager, LoginRepository loginRepository, UserRepository userRepository) {
         this.sessionManager = sessionManager;
         this.loginRepository = loginRepository;
+        this.userRepository = userRepository;
     }
 
     public Observable<Boolean> execute(final String login) {
-        return Observable
-                .create(new ObservableOnSubscribe<Boolean>() {
+        return  userRepository.getUser(login)
+                .map(new Function<User, Boolean>() {
                     @Override
-                    public void subscribe(ObservableEmitter<Boolean> emmiter) throws Exception {
+                    public Boolean apply(@NonNull User user) throws Exception {
 
+                        boolean result = false;
+                        if (user != null) {
+                            result = true;
+                        }
 
-                        loginRepository.put(login);
-                        sessionManager.startSession();
-
-
-                        emmiter.onNext(sessionManager.isSessionStarted());
-                        emmiter.onComplete();
-
+                        return result;
 
                     }
                 })
-                .delay(1000, TimeUnit.MILLISECONDS);
+                .doOnNext(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(@NonNull Boolean result) throws Exception {
+                        if (result) {
+                            loginRepository.put(login);
+                        }
+                    }
+                });
     }
 
 }

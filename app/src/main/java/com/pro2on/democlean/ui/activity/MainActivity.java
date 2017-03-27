@@ -1,13 +1,16 @@
 package com.pro2on.democlean.ui.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -15,8 +18,14 @@ import com.arellomobile.mvp.presenter.ProvidePresenter;
 import com.pro2on.democlean.R;
 import com.pro2on.democlean.application.DemoApp;
 import com.pro2on.democlean.domain.interactor.LogoutInteractor;
+import com.pro2on.democlean.domain.interactor.UserInteractor;
 import com.pro2on.democlean.mvp.presenter.LogoutPresenter;
+import com.pro2on.democlean.mvp.presenter.UserPresenter;
 import com.pro2on.democlean.mvp.view.LogoutView;
+import com.pro2on.democlean.mvp.view.UserView;
+import com.pro2on.democlean.ui.adapter.RepositoriesListAdapter;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -30,7 +39,7 @@ import timber.log.Timber;
  * Created by pro2on in project DemoClean
  */
 
-public class MainActivity extends MvpAppCompatActivity implements LogoutView {
+public class MainActivity extends MvpAppCompatActivity implements LogoutView, UserView {
 
 
     private static final int LAYOUT = R.layout.activity_main;
@@ -40,8 +49,14 @@ public class MainActivity extends MvpAppCompatActivity implements LogoutView {
     @Inject
     LogoutInteractor logoutInteractor;
 
+    @Inject
+    UserInteractor userInteractor;
+
     @InjectPresenter
     LogoutPresenter logoutPresenter;
+
+    @InjectPresenter
+    UserPresenter userPresenter;
 
 
     @ProvidePresenter LogoutPresenter provideLogoutPresenter() {
@@ -49,14 +64,21 @@ public class MainActivity extends MvpAppCompatActivity implements LogoutView {
     }
 
 
+    @ProvidePresenter UserPresenter provideUserPresenter() {
+        return new UserPresenter(userInteractor);
+    }
+
+
     @BindView(R.id.lvRepositories)
     ListView lvRepositories;
     @BindView(R.id.pbLoading)
     ProgressBar pbLoading;
+    @BindView(R.id.emptyView)
+    TextView emptyView;
 
 
     private AlertDialog errorDialog;
-
+    private RepositoriesListAdapter repositoriesListAdapter;
 
 
     @Override
@@ -71,7 +93,18 @@ public class MainActivity extends MvpAppCompatActivity implements LogoutView {
 
         errorDialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.app_name)
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialog) {
+                        userPresenter.closeError();
+                    }
+                })
                 .create();
+
+        repositoriesListAdapter = new RepositoriesListAdapter(this);
+        lvRepositories.setAdapter(repositoriesListAdapter);
+        lvRepositories.setEmptyView(emptyView);
+
     }
 
 
@@ -103,5 +136,46 @@ public class MainActivity extends MvpAppCompatActivity implements LogoutView {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
         startActivity(intent);
+    }
+
+    @Override
+    public void showUserName(String username) {
+        Timber.d("user name: %s", username);
+        getSupportActionBar().setTitle(username);
+    }
+
+    @Override
+    public void showProgress() {
+        pbLoading.setVisibility(View.VISIBLE);
+        lvRepositories.setVisibility(View.GONE);
+        emptyView.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void hideProgress() {
+        pbLoading.setVisibility(View.GONE);
+        lvRepositories.setVisibility(View.VISIBLE);
+        emptyView.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showError(String message) {
+        errorDialog.setMessage(message);
+        errorDialog.show();
+    }
+
+    @Override
+    public void hideError() {
+        errorDialog.hide();
+    }
+
+    @Override
+    public void setupRepositories(List<String> items) {
+        repositoriesListAdapter.addAll(items);
+        repositoriesListAdapter.notifyDataSetChanged();
+
+        for (String item : items) {
+            Timber.d("project: %s", item);
+        }
     }
 }
