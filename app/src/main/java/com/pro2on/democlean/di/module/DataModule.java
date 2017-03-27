@@ -11,9 +11,7 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Date: 27.03.17
- * Time: 14:59
- * Created by pro2on in project DemoClean
+ * For injecting objects from data layer
  */
 @Module
 public class DataModule {

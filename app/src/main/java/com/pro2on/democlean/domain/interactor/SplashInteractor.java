@@ -4,6 +4,8 @@ import com.pro2on.democlean.domain.model.LogoutManager;
 import com.pro2on.democlean.domain.model.SessionManager;
 import com.pro2on.democlean.domain.repository.LoginRepository;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
@@ -19,6 +21,7 @@ public class SplashInteractor {
     private final LogoutManager logoutManager;
 
 
+    @Inject
     public SplashInteractor(LoginRepository loginRepository, SessionManager sessionManager, LogoutManager logoutManager) {
         this.loginRepository = loginRepository;
         this.sessionManager = sessionManager;

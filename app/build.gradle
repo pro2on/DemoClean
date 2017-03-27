@@ -68,6 +68,10 @@ dependencies {
     compile 'com.arello-mobile:moxy-app-compat:1.4.6'
 
 
+    /* butterknife */
+    compile 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
 
     /* leak canary for detect memory leaks */
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
