@@ -1,5 +1,6 @@
 package com.pro2on.democlean.di;
 
+import com.pro2on.democlean.di.module.ApiModule;
 import com.pro2on.democlean.di.module.ApplicationModule;
 import com.pro2on.democlean.di.module.DataModule;
 import com.pro2on.democlean.ui.activity.LoginActivity;
@@ -16,12 +17,13 @@ import dagger.Component;
  * Created by pro2on in project DemoClean
  */
 @Singleton
-@Component(modules = {ApplicationModule.class, DataModule.class})
+@Component(modules = {ApplicationModule.class, DataModule.class, ApiModule.class})
 public interface AppComponent {
 
 
     void inject(SplashActivity activity);
     void inject(LoginActivity activity);
     void inject(MainActivity activity);
+
 
 }

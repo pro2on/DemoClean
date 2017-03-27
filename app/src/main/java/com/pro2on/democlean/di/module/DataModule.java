@@ -2,8 +2,12 @@ package com.pro2on.democlean.di.module;
 
 import com.pro2on.democlean.data.cache.LoginCache;
 import com.pro2on.democlean.data.cache.LoginCacheImpl;
+import com.pro2on.democlean.data.cache.UserCache;
+import com.pro2on.democlean.data.cache.UserCacheImpl;
 import com.pro2on.democlean.data.repository.LoginDataRepository;
+import com.pro2on.democlean.data.repository.UserDataRepository;
 import com.pro2on.democlean.domain.repository.LoginRepository;
+import com.pro2on.democlean.domain.repository.UserRepository;
 
 import javax.inject.Singleton;
 
@@ -30,5 +34,17 @@ public class DataModule {
         return loginDataRepository;
     }
 
+
+    @Provides @Singleton
+    public UserCache provideUserCache(UserCacheImpl userCache) {
+        return userCache;
+    }
+
+
+    @Provides
+    @Singleton
+    public UserRepository provideUserRepository(UserDataRepository userDataRepository) {
+        return userDataRepository;
+    }
 
 }

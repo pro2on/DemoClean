@@ -8,7 +8,6 @@ import io.reactivex.Observable;
 
 public interface LoginRepository {
 
-
     Observable<String> get();
 
     void put(String login);

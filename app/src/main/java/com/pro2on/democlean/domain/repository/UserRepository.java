@@ -18,7 +18,4 @@ public interface UserRepository {
     public Observable<User> getUser(String login);
 
 
-    public Observable<List<String>> getProjects(String login);
-
-
 }

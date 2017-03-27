@@ -2,6 +2,8 @@ package com.pro2on.democlean.domain.entity;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class User implements Serializable {
@@ -12,9 +14,11 @@ public class User implements Serializable {
     private long id;
     private String url = "";
     private String email = "";
+    private List<String> projects = new ArrayList<>();
 
 
     public User() {
+        //empty
     }
 
 
@@ -55,6 +59,13 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    public List<String> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<String> projects) {
+        this.projects = projects;
+    }
 
     @Override
     public String toString() {
@@ -63,6 +74,7 @@ public class User implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", url='").append(url).append('\'');
         sb.append(", email='").append(email).append('\'');
+        sb.append(", projects=").append(projects);
         sb.append('}');
         return sb.toString();
     }
