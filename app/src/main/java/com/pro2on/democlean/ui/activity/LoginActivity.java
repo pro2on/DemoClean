@@ -116,6 +116,9 @@ public class LoginActivity extends MvpAppCompatActivity implements LoginView, Di
     private void toggleProgressVisibility(final boolean show) {
         progressView.setVisibility(show ? View.VISIBLE : View.GONE);
         loginButton.setVisibility(show ? View.GONE : View.VISIBLE);
+
+        // also need enable/disable editText
+        loginEditView.setEnabled(!show);
     }
 
     @Override

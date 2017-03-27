@@ -1,6 +1,5 @@
 package com.pro2on.democlean.domain.interactor;
 
-import com.pro2on.democlean.domain.model.LogoutManager;
 import com.pro2on.democlean.domain.model.SessionManager;
 import com.pro2on.democlean.domain.repository.LoginRepository;
 
@@ -18,14 +17,14 @@ public class SplashInteractor {
 
     private final LoginRepository loginRepository;
     private final SessionManager sessionManager;
-    private final LogoutManager logoutManager;
+    private final LogoutInteractor logoutInteractor;
 
 
     @Inject
-    public SplashInteractor(LoginRepository loginRepository, SessionManager sessionManager, LogoutManager logoutManager) {
+    public SplashInteractor(LoginRepository loginRepository, SessionManager sessionManager, LogoutInteractor logoutInteractor) {
         this.loginRepository = loginRepository;
         this.sessionManager = sessionManager;
-        this.logoutManager = logoutManager;
+        this.logoutInteractor = logoutInteractor;
     }
 
     public Observable<Boolean> isSessionIsStartedOrStartSessionIfPossible() {
@@ -50,7 +49,7 @@ public class SplashInteractor {
                 .doOnError(new Consumer<Throwable>() {
                     @Override
                     public void accept(@NonNull Throwable throwable) throws Exception {
-                        logoutManager.clearRepositories();
+                        logoutInteractor.logout();
                     }
                 });
 
