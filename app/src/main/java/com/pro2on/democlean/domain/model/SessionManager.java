@@ -32,6 +32,11 @@ public class SessionManager {
 
 
 
+    public boolean isSessionStarted() {
+        return isSessionStartedRelay.getValue();
+    }
+
+
     public void startSession() {
         isSessionStartedRelay.accept(true);
     }

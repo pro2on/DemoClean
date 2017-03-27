@@ -2,6 +2,7 @@ package com.pro2on.democlean.di;
 
 import com.pro2on.democlean.di.module.ApplicationModule;
 import com.pro2on.democlean.di.module.DataModule;
+import com.pro2on.democlean.ui.activity.SplashActivity;
 
 import javax.inject.Singleton;
 
@@ -15,4 +16,7 @@ import dagger.Component;
 @Singleton
 @Component(modules = {ApplicationModule.class, DataModule.class})
 public interface AppComponent {
+
+
+    void inject(SplashActivity activity);
 }
