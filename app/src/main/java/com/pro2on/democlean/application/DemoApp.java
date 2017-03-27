@@ -6,6 +6,8 @@ import com.arellomobile.mvp.MvpFacade;
 import com.pro2on.democlean.BuildConfig;
 import com.pro2on.democlean.application.timber.CrashReportingTree;
 import com.pro2on.democlean.di.AppComponent;
+import com.pro2on.democlean.di.DaggerAppComponent;
+import com.pro2on.democlean.di.module.ApplicationModule;
 import com.squareup.leakcanary.LeakCanary;
 
 import timber.log.Timber;

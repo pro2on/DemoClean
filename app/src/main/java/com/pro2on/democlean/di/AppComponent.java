@@ -1,6 +1,7 @@
 package com.pro2on.democlean.di;
 
 import com.pro2on.democlean.di.module.ApplicationModule;
+import com.pro2on.democlean.di.module.DataModule;
 
 import javax.inject.Singleton;
 
@@ -12,6 +13,6 @@ import dagger.Component;
  * Created by pro2on in project DemoClean
  */
 @Singleton
-@Component(modules = {ApplicationModule.class})
+@Component(modules = {ApplicationModule.class, DataModule.class})
 public interface AppComponent {
 }
