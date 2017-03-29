@@ -1,7 +1,5 @@
 Hi there!
 
-This project is the example of my current skills as native android developer. 
-
 So what you can find here:
 
 1. At first, main app structure is standing on respect  to clean architecture. Classes situate at different layers, it gives us ability to test all use cases. Really very helpfull. Do you want to see app's reaction to HTTP error - just replace certain repository.
