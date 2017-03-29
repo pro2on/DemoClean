@@ -10,3 +10,10 @@ So what you can find here:
 
 3. As for MVP, I use Moxy library for this purposes. Saves a lof of time. With Moxy it's no need to take care about view's lifecycle - just write a code.
 
+
+App structure:
+
+
+
+![](DEV/app.png) 
+
